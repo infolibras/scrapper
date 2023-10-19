@@ -6,7 +6,7 @@ authors = ["Vitor Daniel <vitor036daniel@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3"
 Scrapy = "^2.11.0"
 
 [tool.poetry.group.dev.dependencies]
