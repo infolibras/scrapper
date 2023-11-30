@@ -10,6 +10,8 @@ python = ">=3.8"
 Scrapy = "^2.11.0"
 mysql-connector-python = "^8.2.0"
 python-dotenv = "^1.0.0"
+typesense = "^0.18.0"
+python-slugify = "^8.0.1"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.12.0"
