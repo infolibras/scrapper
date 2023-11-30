@@ -36,8 +36,40 @@ class InfolibrasPipeline:
                 "fields": [
                     { "name": "id", "type": "string" },
                     { "name": "termo", "type": "string" },
-                    { "name": "variacoes", "type": "string[]" }
+                    { "name": "variacoes", "type": "string[]" },
+                    {
+                        "name": "embedding",
+                        "type": "float[]",
+                        "embed": {
+                            "from": ["variacoes"],
+                            "model_config": {
+                                "model_name": "openai/text-embedding-ada-002",
+                                "api_key": os.getenv("OPENAI_API_KEY")
+                            }
+                        }
+                    }
                 ]
+            })
+
+            self.client.collections.create({
+                "name": "gooli-termos-queries",
+                "fields": [
+                    {"name": "q", "type": "string" },
+                    {"name": "count", "type": "int32" }
+                ]
+            })
+
+            self.client.analytics.rules.upsert("gooli-termos-queries-aggregation", {
+                "type": "popular_queries",
+                "params": {
+                    "source": {
+                        "collections": ["gooli-termos"]
+                    },
+                    "destination": {
+                        "collection": "gooli-termos-queries"
+                    },
+                    "limit": 1000
+                }
             })
 
     def process_item(self, item, spider):
